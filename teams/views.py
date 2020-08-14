@@ -133,6 +133,13 @@ class TeamViewSet(viewsets.ModelViewSet):
         author = serializer.data["author"]
         board_data = serializer.data
         board_data["author"] = serializer.data["author"]['username']
+        for member in application_list:
+            if member["job"] == "Developer":
+                board_data['developer'] -= 1
+            if member["job"] == "Planner":
+                board_data['planner'] -= 1
+            if member["job"] == "Designer":
+                board_data['designer'] -= 1
 
         return Response({
             "board": board_data,
